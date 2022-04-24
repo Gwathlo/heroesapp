@@ -7,7 +7,14 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-insert',
   templateUrl: './insert.component.html',
-  styles: [],
+  styles: [
+    `
+      img {
+        width: 100%;
+        border-radius: 5px;
+      }
+    `,
+  ],
 })
 export class InsertComponent implements OnInit {
   publishers = [
