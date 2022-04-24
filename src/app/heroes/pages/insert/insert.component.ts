@@ -67,4 +67,13 @@ export class InsertComponent implements OnInit {
       });
     }
   }
+
+  delete() {
+    if (this.hero.id) {
+      this.heroesService
+        .deleteHero(this.hero.id)
+        .subscribe((resp) => console.log('Deleted'));
+      this.router.navigate(['/heroes']);
+    }
+  }
 }

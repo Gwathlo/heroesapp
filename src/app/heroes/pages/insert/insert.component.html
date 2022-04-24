@@ -44,10 +44,18 @@
 
         <br>
 
-        <button mat-raised-button color="primary" (click)="save()">
-            <mat-icon>save</mat-icon>
+        <div fxLayoutGap="5px">
+
+            <button mat-raised-button color="primary" (click)="save()">
+                <mat-icon>save</mat-icon>
             Save
-        </button>
+            </button>
+
+            <button *ngIf="hero.id" mat-raised-button color="warn" (click)="delete()">
+                <mat-icon>delete</mat-icon>
+                Delete
+            </button>
+        </div>
 
     </div>
 
