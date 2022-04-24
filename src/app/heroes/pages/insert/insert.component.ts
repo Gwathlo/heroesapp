@@ -44,9 +44,11 @@ export class InsertComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params
-      .pipe(switchMap(({ id }) => this.heroesService.getHeroById(id)))
-      .subscribe((hero) => (this.hero = hero));
+    if (this.router.url.includes('edit')) {
+      this.activatedRoute.params
+        .pipe(switchMap(({ id }) => this.heroesService.getHeroById(id)))
+        .subscribe((hero) => (this.hero = hero));
+    }
   }
 
   save() {
