@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Heroe, Publisher } from '../../interfaces/heroes.interface';
 import { HeroesService } from '../../services/heroes.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-insert',
@@ -28,18 +30,32 @@ export class InsertComponent implements OnInit {
     alt_img: '',
   };
 
-  constructor(private heroesService: HeroesService) {}
+  constructor(
+    private heroesService: HeroesService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.activatedRoute.params
+      .pipe(switchMap(({ id }) => this.heroesService.getHeroById(id)))
+      .subscribe((hero) => (this.hero = hero));
+  }
 
   save() {
     if (this.hero.superhero.trim().length === 0) {
       return;
     }
-    this.heroesService.addHero(this.hero).subscribe((resp) => {
-      if (resp) {
-        console.log(resp);
-      }
-    });
+    if (this.hero.id) {
+      this.heroesService.updateHero(this.hero).subscribe((resp) => {
+        if (resp) {
+          console.log('Updated', resp);
+        }
+      });
+    } else {
+      this.heroesService.addHero(this.hero).subscribe((hero) => {
+        this.router.navigate(['/heroes/edit', hero.id]);
+      });
+    }
   }
 }
