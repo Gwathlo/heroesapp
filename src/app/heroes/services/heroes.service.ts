@@ -25,4 +25,8 @@ export class HeroesService {
       `${this.apiEnpoint}/heroes?q=${term}&_limit=6`
     );
   }
+
+  addHero(hero: Heroe): Observable<Heroe> {
+    return this.http.post<Heroe>(`${this.apiEnpoint}/heroes`, hero);
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Heroe, Publisher } from '../../interfaces/heroes.interface';
+import { HeroesService } from '../../services/heroes.service';
 
 @Component({
   selector: 'app-insert',
@@ -27,7 +28,7 @@ export class InsertComponent implements OnInit {
     alt_img: '',
   };
 
-  constructor() {}
+  constructor(private heroesService: HeroesService) {}
 
   ngOnInit(): void {}
 
@@ -35,5 +36,10 @@ export class InsertComponent implements OnInit {
     if (this.hero.superhero.trim().length === 0) {
       return;
     }
+    this.heroesService.addHero(this.hero).subscribe((resp) => {
+      if (resp) {
+        console.log(resp);
+      }
+    });
   }
 }
